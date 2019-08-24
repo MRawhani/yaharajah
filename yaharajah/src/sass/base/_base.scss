@@ -1,0 +1,25 @@
+
+html {
+    font-size: 50%;
+    /*deviding 16/default browser size! V.018*/
+    // @include respond(s){
+    //     font-size: 50%;
+    // }
+    @include respond(xs){
+        font-size: 55%;
+    }
+    @include respond(m){
+        font-size: 60%;
+    }
+    @include respond(l){
+        font-size: 66.5%;
+    }
+    @include respond(xl){
+        font-size: 75%;
+    }
+}
+
+a{
+    text-decoration: none !important;
+    color: inherit !important;
+}

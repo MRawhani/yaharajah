@@ -1,0 +1,14 @@
+@import 'base/mixins';
+@import 'base/base';
+@import './base/variables';
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Noto Kufi Arabic', sans-serif ;
+    direction: rtl;
+}
+
+@import './layout/layout';
+@import 'base/utils';
+@import 'components/rental-list';
