@@ -1,0 +1,11 @@
+.bg-primary {
+    background-color: $main-color !important;
+
+}
+
+.btn {
+    font-size: 1.3rem;
+    &.bg-primary:hover {
+        background-color: $second-color !important;
+    }
+}
