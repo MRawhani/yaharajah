@@ -6,6 +6,8 @@
     "@laylazi/bootstrap-rtl": "^4.3.114",
     "bootstrap": "^4.3.1",
     "bootstrap-v4-rtl": "^4.3.1-5",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.10",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
     "popper.js": "^1.15.0",

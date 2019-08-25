@@ -13,11 +13,18 @@ function App() {
       <Header />
 
       <div className="container">
-      <Switch>
-      <Route path="/rentaldetails/:id" component={props => <RerntalDetail {...props} />}/>
-      <Route exact path="/rentals" component={props => <RentalListing {...props} />} />
-      <Redirect from="/" exact to="/rentals" />
-      </Switch>
+        <Switch>
+          <Route
+            path="/rentaldetails/:id"
+            component={props => <RerntalDetail {...props} />}
+          />
+          <Route
+            exact
+            path="/rentals"
+            component={props => <RentalListing {...props} />}
+          />
+          <Redirect from="/" exact to="/rentals" />
+        </Switch>
       </div>
     </React.Fragment>
   );
