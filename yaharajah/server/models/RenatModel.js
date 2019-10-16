@@ -23,6 +23,7 @@ const rentalSchema = new Schema({
   shared: Boolean,
   description: { type: String, required: true },
   dailyRate: Number,
+  assets: [],
   createdAt: { type: Date, default: Date.now }
 });
 
