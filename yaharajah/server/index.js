@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const mongoose = require("mongoose");
 const config =require('./config/dev');
 const FakeDb = require('./FakeDb');
@@ -17,8 +18,9 @@ mongoose.connect(config.DB_URI,
     
   });
 const app = express();
+app.use(cors());
 app.use('/api/v1/rentals',rentalRoutes);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log("Running");
 });

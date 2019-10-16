@@ -14,8 +14,6 @@ class RentalList extends Component {
     return (
  
           <div className="row">{this.renderRentalList()}</div>
-  
-   
     );
   }
   
