@@ -1,4 +1,5 @@
 const RenatlModel = require("./models/RenatModel");
+const UserModel = require('./models/UserModel')
 
 class FakeDb {
   constructor() {
@@ -68,23 +69,34 @@ class FakeDb {
         assets: ["على شارع", "زاويتين", "مليس","على شارع", "زاويتين", "مليس"]
       }
     ];
+    this.users = [
+      {
+        username: 'Mo',
+        email: 'momo@gmail.com',
+        password: '1234'
+      }
+    ]
   }
   async cleanDb() {
+    await UserModel.deleteMany({});
     await RenatlModel.deleteMany({});
   }
 
   pushDataToDb() {
+    const user= new UserModel(this.users[0])
     this.rentals.forEach(rental => {
       const newRental = new RenatlModel(rental);
-
+      newRental.user = user;
+      user.rentals.push(newRental);
       newRental.save();
     });
+    user.save()
   }
  
-  seedDb() {
+  async seedDb() {
     console.log('dcfvbg');
     
-    this.cleanDb();
+   await this.cleanDb();
     this.pushDataToDb();
   }
 }
