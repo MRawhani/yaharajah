@@ -10,7 +10,7 @@ mongoose
   .connect(config.DB_URI, { useNewUrlParser: true })
   .then(() => {
     const fakeDb = new FakeDb();
-   fakeDb.seedDb();
+  // fakeDb.seedDb();
     console.log("sucsess");
   })
   .catch(err => {
