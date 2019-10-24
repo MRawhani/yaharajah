@@ -1,33 +1,58 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-
-import Header from "./shared/header";
+import { Switch, Route, Redirect,withRouter } from "react-router-dom";
+import {connect } from 'react-redux'
+import Header from "./components/shared/header";
 import RentalListing from "./components/rentals/rental-listing/RentalListing";
 
-import RerntalDetail from "./components/rentals/rental-details/RentalDetail";
+import RentalDetail from "./components/rentals/rental-details/RentalDetail";
 import "./App.scss";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import ProtectedRoute from './components/shared/auth/ProtectedRoute'
+import LoggedInRoute from './components/shared/auth/LoggedInRoute'
+import {checkAuth,logout} from './actions'
 
-function App() {
-  return (
-    <React.Fragment>
-      <Header />
-
-      <div className="container">
-        <Switch>
+class  App extends React.Component {
+  componentDidMount(){
+    this.props.checkAuth()
+  }
+  logoutUser=()=>{
+    this.props.logout()
+  }
+  render(){
+    return (
+      <React.Fragment>
+        <Header logout={this.logoutUser}/>
+  
+        <div className="container">
+          <Switch>
           <Route
-            path="/rentaldetails/:id"
-            component={props => <RerntalDetail {...props} />}
-          />
-          <Route
-            exact
-            path="/rentals"
-            component={props => <RentalListing {...props} />}
-          />
-          <Redirect from="/" exact to="/rentals" />
-        </Switch>
-      </div>
-    </React.Fragment>
-  );
+              path="/login"
+              component={props => <Login {...props} />}
+            />
+            <LoggedInRoute
+              path="/register"
+              component={props => <Register {...props} />}
+            />
+            <ProtectedRoute
+              path="/rentaldetails/:id"
+              exact
+              component={RentalDetail}
+            />
+            <Route
+              exact
+              path="/rentals"
+              component={props => <RentalListing {...props} />}
+            />
+            <Redirect from="/" exact to="/rentals" />
+          </Switch>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default withRouter(connect(
+  null,
+  { checkAuth,logout }
+)(App));

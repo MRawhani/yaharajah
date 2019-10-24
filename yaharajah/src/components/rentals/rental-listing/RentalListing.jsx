@@ -4,9 +4,11 @@ import RentalList from "./RentalList";
 import { fetchRentals } from "../../../actions";
 class RentalListing extends Component {
   componentDidMount() {
+    
     this.props.fetchRentals();
   }
   render() {
+    
     return (
       <div className="container">
         <section id="rentalListing">

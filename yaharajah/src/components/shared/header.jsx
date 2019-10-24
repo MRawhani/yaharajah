@@ -1,6 +1,6 @@
 import React from "react";
-import { NavLink as RRNavLink } from 'react-router-dom';
-
+import { NavLink as RRNavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   Collapse,
   Navbar,
@@ -15,7 +15,7 @@ import {
   DropdownItem
 } from "reactstrap";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,6 +24,34 @@ export default class Header extends React.Component {
       isOpen: false
     };
   }
+  handleLogout = () => {
+    this.props.logout();
+    this.props.history.push("/login");
+  };
+  renderAuthButtons = () => {
+    const { isAuth } = this.props.auth;
+    if (isAuth) {
+      return (
+        <NavItem>
+          <NavLink onClick={this.handleLogout}>خروج</NavLink>
+        </NavItem>
+      );
+    }
+    return (
+      <React.Fragment>
+        <NavItem>
+          <NavLink tag={RRNavLink} exact to="/login">
+            تسجيل الدخول
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={RRNavLink} exact to="/register">
+            تسجيل
+          </NavLink>
+        </NavItem>
+      </React.Fragment>
+    );
+  };
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -34,7 +62,9 @@ export default class Header extends React.Component {
       <div>
         <Navbar color="dark" dark expand="md">
           <div className="container">
-            <NavbarBrand tag={RRNavLink} exact to="/">ياحراجاه</NavbarBrand>
+            <NavbarBrand tag={RRNavLink} exact to="/">
+              ياحراجاه
+            </NavbarBrand>
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2 btn-bwm-search bwm-search"
@@ -53,14 +83,13 @@ export default class Header extends React.Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink tag={RRNavLink} exact to="/" active>رئيسية</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
-                    تسجيل
+                  <NavLink tag={RRNavLink} exact to="/" active>
+                    رئيسية
                   </NavLink>
                 </NavItem>
-                <UncontrolledDropdown nav inNavbar>
+
+                {this.renderAuthButtons()}
+                {/* <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Options
                   </DropdownToggle>
@@ -70,7 +99,7 @@ export default class Header extends React.Component {
                     <DropdownItem divider />
                     <DropdownItem>Reset</DropdownItem>
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown>*/}
               </Nav>
             </Collapse>
           </div>
@@ -79,3 +108,9 @@ export default class Header extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+export default withRouter(connect(mapStateToProps)(Header));
