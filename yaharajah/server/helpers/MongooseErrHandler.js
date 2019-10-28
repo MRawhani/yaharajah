@@ -6,7 +6,7 @@ module.exports= {
         for(let property in errors){
             if(errors.hasOwnProperty(property)){
                 errorsArray.push({title: property, detail: errors[property].message})
-            }
+            } 
         }
         return errorsArray;
     }, 

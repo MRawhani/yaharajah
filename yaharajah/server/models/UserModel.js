@@ -24,7 +24,8 @@ const userSchema = new Schema({
           max: [32, "Too long, max is 128 characters"]
 
       },
-      rentals: [{type: Schema.Types.ObjectId, ref: 'RentalModel'}]
+      rentals: [{type: Schema.Types.ObjectId, ref: 'RentalModel'}],
+      bookings: [{type: Schema.Types.ObjectId, ref: 'BookingModel'}]
       
 });
 
