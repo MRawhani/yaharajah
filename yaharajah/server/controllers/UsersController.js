@@ -26,7 +26,7 @@ exports.auth = function(req, res) {
     if (user.isSamePassword(password)) {
       const token = jwt.sign(
         {
-          userId: user._id,
+          userId: user._id,  
           username: user.username
         },
         config.SECRET,
@@ -74,11 +74,11 @@ exports.register = function(req, res) {
     }
 
     const user = new UserModel({
-      username,
-      email,
+      username, 
+      email, 
       password
     });
-
+ 
     user.save(function(err) {
       if (err) {
         return res

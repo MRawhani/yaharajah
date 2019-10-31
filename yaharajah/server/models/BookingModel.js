@@ -9,7 +9,7 @@ const bookingSchema = new Schema({
   startAt: {
     type: Date,
     required: "Starting Date is required!"
-  },
+  }, 
 
   totalPrice: { type: Number },
   days: { type: Number },

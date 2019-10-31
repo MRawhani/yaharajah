@@ -9,21 +9,21 @@ const rentalRoutes = require("./routes/rentals"),
   bookingRoutes = require("./routes/bookings");
 mongoose
   .connect(config.DB_URI, { useNewUrlParser: true })
-  .then(() => { 
-    const fakeDb = new FakeDb(); 
-    //fakeDb.seedDb();
+  .then(() => {
+    const fakeDb = new FakeDb();
+    fakeDb.seedDb();
     console.log("sucsess");
   })
   .catch(err => {
-    console.log(err);  
+    console.log(err);
   });
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/api/v1/rentals", rentalRoutes); 
-app.use("/api/v1/users", userRoutes); 
+app.use("/api/v1/rentals", rentalRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
-const PORT = process.env.PORT || 3001;    
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log("Running");
 });

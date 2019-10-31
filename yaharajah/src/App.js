@@ -9,7 +9,8 @@ import "./App.scss";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import ProtectedRoute from './components/shared/auth/ProtectedRoute'
-import LoggedInRoute from './components/shared/auth/LoggedInRoute'
+import LoggedInRoute from './components/shared/auth/LoggedInRoute';
+import NotFound from './components/shared/NotFound'
 import {checkAuth,logout} from './actions'
 
 class  App extends React.Component {
@@ -44,7 +45,12 @@ class  App extends React.Component {
               path="/rentals"
               component={props => <RentalListing {...props} />}
             />
+             <Route
+              path={`/not-found`}
+              component={NotFound}
+            />
             <Redirect from="/" exact to="/rentals" />
+            <Redirect  to="/not-found" />
           </Switch>
         </div>
         <br></br>

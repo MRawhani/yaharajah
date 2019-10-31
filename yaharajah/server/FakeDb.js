@@ -12,9 +12,10 @@ class FakeDb {
         category: "بيت",
         coin: "دولار",
         price: 1000,
-        type: "بيع",
+        type: "بيع",                                                
         image: "http://via.placeholder.com/350x250",
         bedrooms: 3,
+        bathrooms: 1,
         description: "شقة جميلة ورائعة",
         dailyRate: 34,
         shared: false,
@@ -68,6 +69,54 @@ class FakeDb {
         shared: true,
         bargain: false,
         assets: ["على شارع", "زاويتين", "مليس","على شارع", "زاويتين", "مليس"]
+      },
+      {
+        title: "شقة ",
+        city: "حجة",
+        street: "مسور",
+        category: "بيت",
+        coin: "دولار",
+        price: 30,
+        type: "ايجار",
+        image: "http://via.placeholder.com/350x250",
+        bedrooms: 9,
+        description: "شقة جميلة ورائعة",
+        dailyRate: 33,
+        shared: true,
+        bargain: false,
+        assets: ["على شارع", "زاويتين", "مليس","على شارع", "زاويتين", "مليس"]
+      },
+      {
+        title: "محل للبيع",
+        city: "إب",
+        street: "خبان",
+        category: "بيت",
+        coin: "دولار",
+        price: 1000,
+        type: "بيع",
+        image: "http://via.placeholder.com/350x250",
+        bedrooms: 9,
+        description: "شقة جميلة ورائعة",
+        dailyRate: 33,
+        shared: true,
+        bargain: false,
+        assets: ["على شارع", "زاويتين", "مليس","على شارع", "زاويتين", "مليس"]
+      },
+      {
+        title: "Centra ",
+        city: "عدن",
+        street: "المعلا",
+        category: "بيت",
+        coin: "دولار",
+        price: 1000,
+        type: "بيع",
+        image: "http://via.placeholder.com/350x250",
+        bedrooms: 9,
+        description: "شقة جميلة ورائعة",
+        dailyRate: 33,
+        shared: true,
+        bargain: false,
+        assets: ["على شارع", "زاويتين", "مليس","على شارع", "زاويتين", "مليس"]
       }
     ];
     this.users = [
@@ -84,7 +133,7 @@ class FakeDb {
     ]
   }
   async cleanDb() {
-   
+    await BookingModel.deleteMany({});
     await UserModel.deleteMany({});
     await RenatlModel.deleteMany({});
   }
