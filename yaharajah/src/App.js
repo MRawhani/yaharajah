@@ -47,6 +47,8 @@ class  App extends React.Component {
             <Redirect from="/" exact to="/rentals" />
           </Switch>
         </div>
+        <br></br>
+        <br></br>
       </React.Fragment>
     );
   }

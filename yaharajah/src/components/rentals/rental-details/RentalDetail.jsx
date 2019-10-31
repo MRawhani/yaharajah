@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import RentalMap from './RentalMap'
+import RentalMap from "./RentalMap";
 import { fetchRentalById } from "../../../actions";
 import RentalAssets from "./RentalAssets";
 import helper from "./../../../helpers";
+import { Booking } from "../../booking/Booking";
 class RentalDetail extends Component {
   componentDidMount() {
     // const rentaId= parseInt(this.props.match.params.id,10);
+ 
     this.props.fetchRentalById(this.props.match.params.id);
+ 
   }
 
   render() {
@@ -22,7 +25,7 @@ class RentalDetail extends Component {
                 <img src={rental.image} alt=""></img>
               </div>
               <div className="col-md-6">
-               <RentalMap location={`${rental.city},${rental.street}`}/>
+                <RentalMap location={`${rental.city},${rental.street}`} />
               </div>
             </div>
           </div>
@@ -43,7 +46,10 @@ class RentalDetail extends Component {
                   <hr></hr>
                   <RentalAssets rentals={rental} />
                 </div>
-                <div className="col-md-4"> حجز</div>
+              </div>
+              <div className="col-md-4">
+                {" "}
+                <Booking rental={rental}/>{" "}
               </div>
             </div>
           </div>

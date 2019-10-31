@@ -24,13 +24,13 @@ exports.createBooking = function(req, res) {
           .status(422)
           .send({ errors: MongooseErrHandler.normalizeErrors(err.errors) });
       }
-       if (foundedRental.user.id === user.id) { 
+       if (foundedRental.user.id === user.id) {  
         return res.status(422).send({
           errors: [
             { title: "Invalid!  ", detail: "Cannot create booking on yours." }
           ]
         });
-      }
+      }  
       if (isValidBooking(booking, foundedRental)) {
           booking.user = user;
           booking.rental = foundedRental;

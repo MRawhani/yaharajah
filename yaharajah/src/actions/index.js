@@ -20,8 +20,12 @@ export const fetchRentals = () => dispatch => {
 export const fetchRentalById = id => dispatch => {
   dispatch({ type: FETCH_RENTAL_By_ID_INIT });
 
-  axios.get(`${apiUrl}/rentals/${id}`).then(rental => {
+  return axios.get(`${apiUrl}/rentals/${id}`).then(rental => {
     dispatch({ type: FETCH_RENTAL_By_ID, payload: rental.data });
+      return rental.data;
+  }).catch(err=>{
+    debugger
+    return Promise.reject(err);
   });
 };
 
@@ -29,7 +33,7 @@ export const fetchRentalById = id => dispatch => {
 
 export const register = userData => {
   
-  return axios.post(`${apiUrl}/users/register`,{...userData}).then(
+  return axios.post(`${apiUrl}/users/register`,userData).then(
     (res) => {
       
    return res.data
@@ -64,7 +68,7 @@ export const checkAuth= () => dispatch => {
 // another way of setting thunk's dispatch 
 export const loginAction = (userData)=>{
   return dispatch =>{
-    axios.post(`${apiUrl}/users/auth`,{...userData}).then(res => res.data)
+    axios.post(`${apiUrl}/users/auth`,userData).then(res => res.data)
     .then(token=>{
       authService.saveToken(token);
       dispatch(loginSuccess());
@@ -83,4 +87,15 @@ export const logout = ()=>{
     type: LOGOUT
   }
 }
+
+
+
+export const createBooking = (booking) =>  {
+  debugger
+  return axiosInstance.post(`${apiUrl}/bookings/`,booking).then(res => {
+    debugger
+    return res.data;
+  }).catch((response) =>
+    Promise.reject(response.response.data.errors));
+};
 
