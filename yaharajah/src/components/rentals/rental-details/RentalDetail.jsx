@@ -8,7 +8,9 @@ import { Booking } from "../../booking/Booking";
 class RentalDetail extends Component {
   componentDidMount() {
     // const rentaId= parseInt(this.props.match.params.id,10);
+ 
     this.props.fetchRentalById(this.props.match.params.id);
+ 
   }
 
   render() {
