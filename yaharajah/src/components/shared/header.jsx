@@ -14,6 +14,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import RentalSearchInput from "../rentals/RentalSearchInput";
 
 class Header extends React.Component {
   constructor(props) {
@@ -65,20 +66,7 @@ class Header extends React.Component {
             <NavbarBrand tag={RRNavLink} exact to="/">
               ياحراجاه
             </NavbarBrand>
-            <form className="form-inline my-2 my-lg-0">
-              <input
-                className="form-control mr-sm-2 btn-bwm-search bwm-search"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn bg-primary text-white my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
+            <RentalSearchInput />
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>

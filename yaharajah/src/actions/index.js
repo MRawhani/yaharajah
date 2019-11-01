@@ -3,7 +3,10 @@ import {
   FETCH_RENTAL_By_ID,
   FETCH_RENTAL_By_ID_INIT,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,LOGOUT
+  LOGIN_FAILURE,LOGOUT,
+  SEARCH_RENTALS,
+  FETCH_RENTALS_FAIL,
+  FETCH_RENTALS_INIT
 } from "./types";
 import axios from "axios";
 import  authService from '../services/auth-service';
@@ -11,9 +14,21 @@ import  axiosService from '../services/axios-service';
 const apiUrl = "http://localhost:3001/api/v1";
 const axiosInstance = axiosService.getInstance();
 /// Rentals
-export const fetchRentals = () => dispatch => {
-  axiosInstance.get(`${apiUrl}/rentals/`).then(rentals => {
+export const fetchRentals = (keyword) => dispatch => {
+  const url = keyword ? `rentals?city=${keyword}` : 'rentals';
+  dispatch({ type: FETCH_RENTALS_INIT });
+
+  axiosInstance.get(`${apiUrl}/${url}`).then(rentals => {
     dispatch({ type: FETCH_RENTALS, payload: rentals.data });
+  }).catch(({response})=>{
+  debugger
+    dispatch({ type: FETCH_RENTALS_FAIL, payload: response.data.errors || [] });
+  })
+};
+export const searchRentals = (keyword) => dispatch => {
+  axiosInstance.get(`${apiUrl}/rentals/${keyword}`).then(rentalsSeached => {
+    
+    dispatch({ type: SEARCH_RENTALS, payload: rentalsSeached.data });
   });
 };
 //the dispatch from the middle ware
@@ -24,7 +39,7 @@ export const fetchRentalById = id => dispatch => {
     dispatch({ type: FETCH_RENTAL_By_ID, payload: rental.data });
       return rental.data;
   }).catch(err=>{
-    debugger
+    
     return Promise.reject(err);
   });
 };
