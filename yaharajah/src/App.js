@@ -34,14 +34,18 @@ class  App extends React.Component {
               path="/rentals/:city/homes"
               component={props => <RentalSearchListing {...props} />}
             />
-          <Route
-              path="/login"
-              component={props => <Login {...props} />}
+              <ProtectedRoute
+              path="/booking/manage"
+              exact
+              component={CreateRental}
             />
-            <LoggedInRoute
-              path="/register"
-              component={props => <Register {...props} />}
+            
+             <ProtectedRoute
+              path="/rentals/manage"
+              exact
+              component={CreateRental}
             />
+            
              <ProtectedRoute
               path="/rentals/create"
               exact
@@ -56,6 +60,14 @@ class  App extends React.Component {
               exact
               path="/rentals"
               component={props => <RentalListing {...props} />}
+            />
+             <Route
+              path="/login"
+              component={props => <Login {...props} />}
+            />
+            <LoggedInRoute
+              path="/register"
+              component={props => <Register {...props} />}
             />
              <Route
               path={`/not-found`}
