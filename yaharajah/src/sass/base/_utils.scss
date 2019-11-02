@@ -9,3 +9,9 @@
         background-color: $second-color !important;
     }
 }
+.dropdown-item.active,.dropdown-item:focus{
+    background-color: $main-color !important;
+}
+.clickable{
+    cursor: pointer;
+}

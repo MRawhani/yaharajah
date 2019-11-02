@@ -14,6 +14,7 @@ import NotFound from './components/shared/NotFound';
 
 import {checkAuth,logout} from './actions'
 import RentalSearchListing from "./components/rentals/rental-listing/RentalSearchListing";
+import CreateRental from "./components/rentals/rental-create/CreateRental";
 
 class  App extends React.Component {
   componentDidMount(){
@@ -40,6 +41,11 @@ class  App extends React.Component {
             <LoggedInRoute
               path="/register"
               component={props => <Register {...props} />}
+            />
+             <ProtectedRoute
+              path="/rentals/create"
+              exact
+              component={CreateRental}
             />
             <ProtectedRoute
               path="/rentaldetails/:id"

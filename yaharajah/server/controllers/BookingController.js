@@ -41,7 +41,7 @@ exports.createBooking = function(req, res) {
                 return res
                 .status(422)
                 .send({ errors: MongooseErrHandler.normalizeErrors(err.errors) });
-           
+            
               }
               foundedRental.save();
               UserModel.update({_id:user.id},{$push:{bookings:booking}},function(){});

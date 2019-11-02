@@ -2,7 +2,7 @@ import {
   FETCH_RENTALS,
   FETCH_RENTAL_By_ID,
   FETCH_RENTAL_By_ID_INIT,
-  SEARCH_RENTALS,
+
   FETCH_RENTALS_INIT,
   FETCH_RENTALS_FAIL
 } from "./../actions/types";

@@ -12,16 +12,10 @@ class RentalSearchListing extends Component {
         }
     }
     componentDidMount(){
+      
         this.searchRentals();
    }
-   componentDidUpdate(prevProps){
-    const cuurentParam = this.props.match.params.city;
-    const prevParam= prevProps.match.params.city;
-    debugger
-    if(cuurentParam !== prevParam){
-        this.searchRentals();
-    }
-   }
+ 
    searchRentals=()=>{
     this.setState({
         searchKeyword: this.props.match.params.city
@@ -35,7 +29,7 @@ class RentalSearchListing extends Component {
         const {searchKeyword} = this.state;
         let title = '';
         if(errors.length > 0){
-            debugger
+            
             title= errors[0].detail;
         }
         if(data.length > 0) {

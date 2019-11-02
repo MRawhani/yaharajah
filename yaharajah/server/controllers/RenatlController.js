@@ -51,13 +51,13 @@ exports.createRental = function(req, res) {
     city,
     street,
     category,
-    coin,
+    coin, 
     price,
     bargain,
     image,
     bedrooms,
-    bathrooms,
-    shared,
+    bathrooms, 
+    shared,     
     description,
     assets
   } = req.body;
