@@ -13,7 +13,7 @@ mongoose
     const fakeDb = new FakeDb();
     //fakeDb.seedDb();
     console.log("sucsess");
-  })
+  }) 
   .catch(err => {
     console.log(err);
   });

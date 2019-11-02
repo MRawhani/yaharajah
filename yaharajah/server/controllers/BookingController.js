@@ -57,6 +57,19 @@ exports.createBooking = function(req, res) {
      
     });   
 };
+exports.manageBookings= function(req,res){
+  const user = res.locals.user;
+
+  BookingModel.where({user}).populate('rental').exec(function(err,foundedBookings){
+    if(err){
+      return res
+          .status(422)
+          .send({ errors: MongooseErrHandler.normalizeErrors(err.errors) });
+    
+    }
+    return res.json(foundedBookings)
+  })
+}
 function isValidBooking(proposedBooking, rental) {
   let isValid = true;
   if (rental.bookings && rental.bookings.length > 0) { 
