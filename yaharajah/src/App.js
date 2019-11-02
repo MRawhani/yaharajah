@@ -10,8 +10,11 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import ProtectedRoute from './components/shared/auth/ProtectedRoute'
 import LoggedInRoute from './components/shared/auth/LoggedInRoute';
-import NotFound from './components/shared/NotFound'
+import NotFound from './components/shared/NotFound';
+
 import {checkAuth,logout} from './actions'
+import RentalSearchListing from "./components/rentals/rental-listing/RentalSearchListing";
+import CreateRental from "./components/rentals/rental-create/CreateRental";
 
 class  App extends React.Component {
   componentDidMount(){
@@ -28,12 +31,21 @@ class  App extends React.Component {
         <div className="container">
           <Switch>
           <Route
+              path="/rentals/:city/homes"
+              component={props => <RentalSearchListing {...props} />}
+            />
+          <Route
               path="/login"
               component={props => <Login {...props} />}
             />
             <LoggedInRoute
               path="/register"
               component={props => <Register {...props} />}
+            />
+             <ProtectedRoute
+              path="/rentals/create"
+              exact
+              component={CreateRental}
             />
             <ProtectedRoute
               path="/rentaldetails/:id"

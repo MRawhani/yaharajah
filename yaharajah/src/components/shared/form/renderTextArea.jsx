@@ -1,22 +1,17 @@
-import React from "react";
+import React from 'react'
 
-export const RenderInput = ({
+export const RenderTextArea = ({
   input,
   label,
   type,
+  rows,
   className,
-  sympol,
   meta: { touched, error, warning }
 }) => (
   <div className="form-group">
     <label>{label}</label>
     <div className={"input-group"}>
-      {sympol && (
-        <div className="input-group-prepend">
-          <div className="input-group-text">{sympol}</div>
-        </div>
-      )}
-      <input {...input} type={type} className={className} />
+      <textarea {...input}  type={type} className={className} />
     </div>
     {touched && (error && <div className="alert alert-danger">{error}</div>)}
   </div>

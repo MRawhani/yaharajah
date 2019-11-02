@@ -14,6 +14,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import RentalSearchInput from "../rentals/RentalSearchInput";
 
 class Header extends React.Component {
   constructor(props) {
@@ -28,13 +29,44 @@ class Header extends React.Component {
     this.props.logout();
     this.props.history.push("/login");
   };
+  renderUserMenu = () => {
+    return (
+      <UncontrolledDropdown nav inNavbar className="nav-item dropdown">
+        <DropdownToggle nav caret className="nav-link nav-item dropdown-toggle">
+          {this.props.auth.username}
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem
+            tag={RRNavLink}
+            exact
+            to="/rentals/create"
+            className="dropdown-item"
+          >
+            انشاء مكان
+          </DropdownItem>
+          <DropdownItem tag={RRNavLink} exact to="/" className="dropdown-item">
+            إدارة الأمكنة
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem tag={RRNavLink} exact to="/" className="dropdown-item">
+            إدارة الحجوزات
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    );
+  };
   renderAuthButtons = () => {
     const { isAuth } = this.props.auth;
     if (isAuth) {
       return (
-        <NavItem>
-          <NavLink onClick={this.handleLogout}>خروج</NavLink>
-        </NavItem>
+        <React.Fragment>
+          {this.renderUserMenu()}
+          <NavItem>
+            <NavLink onClick={this.handleLogout} className="clickable">
+              خروج
+            </NavLink>
+          </NavItem>
+        </React.Fragment>
       );
     }
     return (
@@ -65,41 +97,11 @@ class Header extends React.Component {
             <NavbarBrand tag={RRNavLink} exact to="/">
               ياحراجاه
             </NavbarBrand>
-            <form className="form-inline my-2 my-lg-0">
-              <input
-                className="form-control mr-sm-2 btn-bwm-search bwm-search"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn bg-primary text-white my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
+            <RentalSearchInput />
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink tag={RRNavLink} exact to="/" active>
-                    رئيسية
-                  </NavLink>
-                </NavItem>
-
                 {this.renderAuthButtons()}
-                {/* <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    Options
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>Option 1</DropdownItem>
-                    <DropdownItem>Option 2</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Reset</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>*/}
               </Nav>
             </Collapse>
           </div>

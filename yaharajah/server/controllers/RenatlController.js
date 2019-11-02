@@ -4,7 +4,7 @@ const UserModel = require('../models/UserModel')
 exports.getRentals = function(req, res) {
   const city = req.query.city;
   const query = city ? { city } : {};
-
+  
   RentalModel.find(query)
     .select("-bookings")
     .exec(function(err, foundedElements) {
@@ -18,7 +18,7 @@ exports.getRentals = function(req, res) {
           errors: [
             {
               title: "No Rentals Found!",
-              detail: `There are no matches for ${city}`
+              detail: `لا يوجد نتائج لمدينة  ${city}`
             }
           ]
         });
@@ -51,13 +51,13 @@ exports.createRental = function(req, res) {
     city,
     street,
     category,
-    coin,
+    coin, 
     price,
     bargain,
     image,
     bedrooms,
-    bathrooms,
-    shared,
+    bathrooms, 
+    shared,     
     description,
     assets
   } = req.body;

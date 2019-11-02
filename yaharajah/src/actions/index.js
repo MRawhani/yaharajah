@@ -3,7 +3,10 @@ import {
   FETCH_RENTAL_By_ID,
   FETCH_RENTAL_By_ID_INIT,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,LOGOUT
+  LOGIN_FAILURE,LOGOUT,
+  SEARCH_RENTALS,
+  FETCH_RENTALS_FAIL,
+  FETCH_RENTALS_INIT
 } from "./types";
 import axios from "axios";
 import  authService from '../services/auth-service';
@@ -11,9 +14,23 @@ import  axiosService from '../services/axios-service';
 const apiUrl = "http://localhost:3001/api/v1";
 const axiosInstance = axiosService.getInstance();
 /// Rentals
-export const fetchRentals = () => dispatch => {
-  axiosInstance.get(`${apiUrl}/rentals/`).then(rentals => {
+export const fetchRentals = (keyword) => dispatch => {
+  const url = keyword ? `rentals?city=${keyword}` : 'rentals';
+  console.log('Log: '+ url);
+  
+  dispatch({ type: FETCH_RENTALS_INIT });
+
+  axiosInstance.get(`${apiUrl}/${url}`).then(rentals => {
     dispatch({ type: FETCH_RENTALS, payload: rentals.data });
+  }).catch((err)=>{
+  
+    dispatch({ type: FETCH_RENTALS_FAIL, payload: err.response? err.response.data.errors : [{detail:err.message}] });
+  })
+};
+export const searchRentals = (keyword) => dispatch => {
+  axiosInstance.get(`${apiUrl}/rentals/${keyword}`).then(rentalsSeached => {
+    
+    dispatch({ type: SEARCH_RENTALS, payload: rentalsSeached.data });
   });
 };
 //the dispatch from the middle ware
@@ -24,7 +41,7 @@ export const fetchRentalById = id => dispatch => {
     dispatch({ type: FETCH_RENTAL_By_ID, payload: rental.data });
       return rental.data;
   }).catch(err=>{
-    debugger
+    
     return Promise.reject(err);
   });
 };
@@ -46,9 +63,10 @@ export const register = userData => {
 };
 
 const loginSuccess = () =>{
-  
+  const username = authService.getUsername();
   return {
-    type : LOGIN_SUCCESS
+    type : LOGIN_SUCCESS,
+    payload: username
   }
 }
 const loginfailure = errors =>{
@@ -91,11 +109,24 @@ export const logout = ()=>{
 
 
 export const createBooking = (booking) =>  {
-  debugger
+  
   return axiosInstance.post(`${apiUrl}/bookings/`,booking).then(res => {
-    debugger
+    
     return res.data;
   }).catch((response) =>
     Promise.reject(response.response.data.errors));
 };
 
+
+export const creatRental = rentalData => {
+  
+  return axiosInstance.post(`${apiUrl}/rentals`,rentalData).then(
+    (res) => {
+   return res.data
+  },
+  (err)=>{
+    
+    return Promise.reject(err.response.data.errors);
+  }
+  );
+};
