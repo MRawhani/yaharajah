@@ -11,7 +11,7 @@ const store = require("./reducers").init();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename='/'>
       <App />
     </BrowserRouter>
   </Provider>,

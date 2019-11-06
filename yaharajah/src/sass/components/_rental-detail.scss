@@ -62,5 +62,16 @@
         }
       }
     }
-  }
-  
+  } 
+  .rental-owner{
+    float: left;
+    & img{
+      height: 50px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+    display: block;
+    font-size: 15px;
+    font-weight: 300;
+  } 

@@ -4,13 +4,12 @@ import RentalMap from "./RentalMap";
 import { fetchRentalById } from "../../../actions";
 import RentalAssets from "./RentalAssets";
 import helper from "./../../../helpers";
-import { Booking } from "../../booking/Booking";
+import Booking  from "../../booking/Booking";
 class RentalDetail extends Component {
   componentDidMount() {
     // const rentaId= parseInt(this.props.match.params.id,10);
- 
+
     this.props.fetchRentalById(this.props.match.params.id);
- 
   }
 
   render() {
@@ -37,6 +36,14 @@ class RentalDetail extends Component {
                   <h2 className={`rental-type ${colorClassname}`}>
                     {rental.city} &#183; {rental.street}
                   </h2>
+                  <div className="rental-owner">
+                    <img
+                      src="https://api.adorable.io/avatars/285/abott@adorable.png"
+                      alt="owner"
+                    />
+                    <span>{rental.user && rental.user.username}</span>
+                  </div>
+
                   <h1 className="rental-title">{rental.title}</h1>
                   <h2 className={`rental-city  ${colorClassname}`}>
                     {rental.category} &#183; {rental.type}
@@ -49,7 +56,7 @@ class RentalDetail extends Component {
               </div>
               <div className="col-md-4">
                 {" "}
-                <Booking rental={rental}/>{" "}
+                <Booking rental={rental} />{" "}
               </div>
             </div>
           </div>
@@ -62,8 +69,6 @@ class RentalDetail extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("fdv vg" + state);
-
   return {
     rental: state.rental.data
   };

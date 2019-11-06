@@ -44,11 +44,11 @@ class Header extends React.Component {
           >
             انشاء مكان
           </DropdownItem>
-          <DropdownItem tag={RRNavLink} exact to="/" className="dropdown-item">
+          <DropdownItem tag={RRNavLink} exact to="/rentals/manage" className="dropdown-item">
             إدارة الأمكنة
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem tag={RRNavLink} exact to="/" className="dropdown-item">
+          <DropdownItem tag={RRNavLink} exact to="/bookings/manage" className="dropdown-item">
             إدارة الحجوزات
           </DropdownItem>
         </DropdownMenu>

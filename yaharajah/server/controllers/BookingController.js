@@ -25,7 +25,7 @@ exports.createBooking = function(req, res) {
           .send({ errors: MongooseErrHandler.normalizeErrors(err.errors) });
       }
        if (foundedRental.user.id === user.id) {  
-        return res.status(422).send({
+        return res.status(422).send({ 
           errors: [
             { title: "Invalid!  ", detail: "Cannot create booking on yours." }
           ]
