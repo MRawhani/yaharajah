@@ -15,6 +15,8 @@ import NotFound from './components/shared/NotFound';
 import {checkAuth,logout} from './actions'
 import RentalSearchListing from "./components/rentals/rental-listing/RentalSearchListing";
 import CreateRental from "./components/rentals/rental-create/CreateRental";
+import BookingManage from "./components/booking/BookingManage";
+import RentalManage from "./components/rentals/RentalManage";
 
 class  App extends React.Component {
   componentDidMount(){
@@ -35,15 +37,15 @@ class  App extends React.Component {
               component={props => <RentalSearchListing {...props} />}
             />
               <ProtectedRoute
-              path="/booking/manage"
+              path="/bookings/manage"
               exact
-              component={CreateRental}
+              component={BookingManage}
             />
             
-             <ProtectedRoute
+             <ProtectedRoute 
               path="/rentals/manage"
               exact
-              component={CreateRental}
+              component={RentalManage}
             />
             
              <ProtectedRoute
@@ -51,7 +53,7 @@ class  App extends React.Component {
               exact
               component={CreateRental}
             />
-            <ProtectedRoute
+            <Route
               path="/rentaldetails/:id"
               exact
               component={RentalDetail}
@@ -74,7 +76,7 @@ class  App extends React.Component {
               component={NotFound}
             />
             <Redirect from="/" exact to="/rentals" />
-            <Redirect  to="/not-found" />
+           
           </Switch>
         </div>
         <br></br>

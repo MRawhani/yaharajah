@@ -1,6 +1,6 @@
 .bg-primary {
     background-color: $main-color !important;
-
+    color: white !important;
 }
 
 .btn {
@@ -14,4 +14,10 @@
 }
 .clickable{
     cursor: pointer;
+}
+.btn-success, .btn-danger{
+    margin-right: 5px;
+}
+.deleteMenu{
+    margin-right: 5px;
 }

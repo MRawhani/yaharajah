@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authService from './auth-service'
-
+//import {toast} from 'react-toastify'
 class AxiosInstance {
     
     constructor(){
@@ -23,6 +23,19 @@ class AxiosInstance {
                 return config
             }
         )
+                
+// this.axiosInstance.interceptors.response.use(null, error => {
+//     const expectedError =
+//       error.response &&
+//       error.response.status >= 400 &&
+//       error.response.status < 500;
+  
+//     if (!expectedError) {
+      
+//      toast.error("An unexpected error occurrred.");
+//     }
+// })
+
         return this.axiosInstance;
     }
 

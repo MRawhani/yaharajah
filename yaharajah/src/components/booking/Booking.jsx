@@ -3,22 +3,25 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import BookingModal from "./BookoingModal";
 import helper from "../../helpers/index";
 import moment from "moment";
-import {ToastContainer,toast} from 'react-toastify'
-import * as actions from './../../actions'
-export class Booking extends React.Component {
+import {Link} from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import * as actions from "./../../actions";
+import { connect } from "react-redux";
+
+class Booking extends React.Component {
   constructor() {
     super();
     this.dateRef = React.createRef();
     this.bookedOutValues = [];
     this.state = {
-     proposedBooking:{
-      startAt: "",
-      endAt: "",
-      guests: '',
-      rental:{}
-     },
+      proposedBooking: {
+        startAt: "",
+        endAt: "",
+        guests: "",
+        rental: {}
+      },
       open: false,
-      errors:[]
+      errors: []
     };
   }
   componentDidMount() {
@@ -51,77 +54,77 @@ export class Booking extends React.Component {
     const endAt = picker.endDate.format("Y/MM/DD");
     this.dateRef.current.value = " من " + startAt + " الى " + endAt;
     this.setState({
-     proposedBooking:{
-       ...this.state.proposedBooking,
-      startAt,
-      endAt
-     }
+      proposedBooking: {
+        ...this.state.proposedBooking,
+        startAt,
+        endAt
+      }
     });
     console.log(this.state);
   };
   selectGuests = event => {
     this.setState({
-     proposedBooking:{
-      ...this.state.proposedBooking,
-      guests: parseInt(event.target.value)
-     }
+      proposedBooking: {
+        ...this.state.proposedBooking,
+        guests: parseInt(event.target.value)
+      }
     });
   };
   canceConformation = () => {
     this.setState({
       open: false,
-      errors:[]
+      errors: []
     });
   };
   confirmProposedData = () => {
-    const {startAt,endAt} = this.state.proposedBooking;
-    const days  = helper.getRangeOfDates(startAt,endAt,'YY/MM/DD').length -0;
-    const {rental } = this.props;
+    const { startAt, endAt } = this.state.proposedBooking;
+    const days = helper.getRangeOfDates(startAt, endAt, "YY/MM/DD").length - 0;
+    const { rental } = this.props;
     this.setState({
       open: true,
-     proposedBooking:{
-      ...this.state.proposedBooking,
-      days,
-      rental,
-      totalPrice: days * rental.price
-     }
+      proposedBooking: {
+        ...this.state.proposedBooking,
+        days,
+        rental,
+        totalPrice: days * rental.price
+      }
     });
   };
-    addNewBookingOutDates=(booking)=>{
-      const dateRange = helper.getRangeOfDates(
-        booking.startAt,
-        booking.endAt,
-        "Y/MM/DD"
-      );
+  addNewBookingOutDates = booking => {
+    const dateRange = helper.getRangeOfDates(
+      booking.startAt,
+      booking.endAt,
+      "Y/MM/DD"
+    );
 
-      this.bookedOutValues.push(...dateRange);
-    }
-    resetInput=()=>{
-      this.dateRef.current.value= '';
-      this.setState({proposedBooking:{ startAt: "",
-      endAt: "",
-      guests: 0,
-      rental:{}}
-    })
-    }
-    reserveBooking= async ()=>{
-    try{
-      
-      const booking= await actions.createBooking(this.state.proposedBooking);
+    this.bookedOutValues.push(...dateRange);
+  };
+  resetInput = () => {
+    this.dateRef.current.value = "";
+    this.setState({
+      proposedBooking: { startAt: "", endAt: "", guests: 0, rental: {} }
+    });
+  };
+  reserveBooking = async () => {
+    try {
+      const booking = await actions.createBooking(this.state.proposedBooking);
       this.addNewBookingOutDates(booking);
       this.canceConformation();
       this.resetInput();
-      toast.success('تم انشاء الحجز')
-    }catch(errors){
+      toast.success("تم انشاء الحجز");
+    } catch (errors) {
       this.setState({
         errors
-      })
-      
+      });
     }
-  }
+  };
   render() {
-    const { rental } = this.props;
-    const {startAt,endAt, guests}= this.state.proposedBooking;
+    const {
+      rental,
+      isAuth
+    } = this.props;
+    debugger
+    const { startAt, endAt, guests } = this.state.proposedBooking;
     return (
       <div className="booking">
         <ToastContainer />
@@ -129,42 +132,53 @@ export class Booking extends React.Component {
           $ {rental.price} <span className="booking-per-night">لليلة</span>
         </h3>
         <hr></hr>
-        <div className="form-group">
-          <label htmlFor="dates">التارريخ</label>
-          <DateRangePicker
-            onApply={this.handleOnApply}
-            opens="right"
-            containerStyles={{ display: "block" }}
-            isInvalidDate={this.checkInvalidDates}
-          >
-            <input
-              ref={this.dateRef}
-              id="dates"
-              type="text"
-              className="form-control"
-            ></input>
-          </DateRangePicker>
-        </div>
-        <div className="form-group">
-          <label htmlFor="guests">ضيوف</label>
-          <input
-            onChange={this.selectGuests}
-            type="number"
-            className="form-control"
-            id="guests"
-            aria-describedby="guest"
-            placeholder=""
-            value={this.state.proposedBooking.guests}
-          ></input>
-        </div>
-        <button
-        disabled={!startAt || !endAt || !guests}
-          onClick={this.confirmProposedData}
-          className="btn btn-primary btn-confirm btn-block"
+        {
+          !isAuth &&   <Link
+         to={{pathname:'/login'}}
+          className="btn bg-primary btn-confirm btn-block"
         >
-          قم بالحجز الآن
-        </button>
-
+         Login
+        </Link>
+        }
+        {isAuth && (
+          <React.Fragment>
+            <div className="form-group">
+              <label htmlFor="dates">التارريخ</label>
+              <DateRangePicker
+                onApply={this.handleOnApply}
+                opens="right"
+                containerStyles={{ display: "block" }}
+                isInvalidDate={this.checkInvalidDates}
+              >
+                <input
+                  ref={this.dateRef}
+                  id="dates"
+                  type="text"
+                  className="form-control"
+                ></input>
+              </DateRangePicker>
+            </div>
+            <div className="form-group">
+              <label htmlFor="guests">ضيوف</label>
+              <input
+                onChange={this.selectGuests}
+                type="number"
+                className="form-control"
+                id="guests"
+                aria-describedby="guest"
+                placeholder=""
+                value={this.state.proposedBooking.guests}
+              ></input>
+            </div>
+            <button
+              disabled={!startAt || !endAt || !guests}
+              onClick={this.confirmProposedData}
+              className="btn btn-primary btn-confirm btn-block"
+            >
+              قم بالحجز الآن
+            </button>
+          </React.Fragment>
+        )}
         <hr></hr>
         <p className="booking-note-title">
           People are interested into this house
@@ -183,3 +197,10 @@ export class Booking extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  debugger
+  return {
+    isAuth:state.auth.isAuth
+  };
+};
+export default connect(mapStateToProps)(Booking);
