@@ -1,7 +1,7 @@
 const UserModel = require("../models/UserModel");
 const MongooseErrHandler = require("../helpers/MongooseErrHandler");
 const jwt = require("jsonwebtoken");
-const config = require("../config/dev");
+const config = require("../config");
 exports.auth = function(req, res) {
   const { email, password } = req.body;
   if (!password || !email) {
